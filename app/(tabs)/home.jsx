@@ -1,12 +1,15 @@
-import { StyleSheet, Text, View, Image, SafeAreaView, Pressable, FlatList } from 'react-native'
+import { StyleSheet, Text, View, Image, SafeAreaView, Pressable, FlatList,TouchableOpacity } from 'react-native'
 import React from 'react'
 import categories from '../../Data/categories'
-
+import Cleaning from '../components/Cleaning'
+import { useNavigation } from '@react-navigation/native';
+import { Link } from 'expo-router';
 const Index = () => {
+    const navigation = useNavigation();
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={styles.container}>
-        <View style={styles.lgo}>
+        <View style={styles.lgo} >
           <Image source={require('../../assets/Logo.png')} style={styles.img} />
           <Text style={styles.txt}>LocalConnect</Text>
         </View>
@@ -30,15 +33,21 @@ const Index = () => {
           horizontal
           showsHorizontalScrollIndicator={false}
           renderItem={({ item }) => (
-            <View style={{ alignItems: 'center', marginLeft: 20, backgroundColor: 'white', borderRadius: 5, padding: 10 }}>
+             <Link href={`../components/Cleaning`} asChild style={{ alignItems: 'center', marginLeft: 20, backgroundColor: 'white', borderRadius: 5, padding: 10 }}>
+              <TouchableOpacity>
+            
+             
               <Image source={item.Icon} style={styles.caticon} />
               <Text style={styles.catname}>{item.name}</Text>
-            </View>
+              
+            
+            </TouchableOpacity>
+</Link>
           )}
           keyExtractor={(item) => item.id}
         />
       </View>
-      {}
+      
       <View style={{ flex: 1 }}>
         <Text style={styles.services}>
           Categories
