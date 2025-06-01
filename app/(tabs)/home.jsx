@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Image, SafeAreaView, Pressable, FlatList,TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View, Image, SafeAreaView, Pressable, FlatList,TouchableOpacity,TextInput } from 'react-native'
 import React from 'react'
 import categories from '../../Data/categories'
 import Cleaning from '../components/Cleaning'
@@ -6,6 +6,10 @@ import { useNavigation } from '@react-navigation/native';
 import { Link } from 'expo-router';
 const Index = () => {
     const navigation = useNavigation();
+   const [text, onChangeText] = React.useState('');
+
+
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={styles.container}>
@@ -17,11 +21,16 @@ const Index = () => {
       </View>
       <View style={styles.searchdiv}>
         <Image source={require('../../assets/icon.png')} style={styles.icon} /> 
-        <Pressable>
-          <Text style={styles.searchtxt}>
-            I want to hire a...
-          </Text>
-        </Pressable>
+        <Pressable style={styles.searchBox}>
+                  <TextInput
+                    style={styles.input}
+                    onChangeText={onChangeText}
+                    value={text}
+                    placeholder="Search for services"
+                    placeholderTextColor="#888"
+                  />
+                </Pressable>
+                <Text>{text}</Text>
       </View>
       <View>
         <Text style={styles.services}>
@@ -33,7 +42,7 @@ const Index = () => {
           horizontal
           showsHorizontalScrollIndicator={false}
           renderItem={({ item }) => (
-             <Link href={`../components/Cleaning`} asChild style={{ alignItems: 'center', marginLeft: 20, backgroundColor: 'white', borderRadius: 5, padding: 10 }}>
+             <Link href={`/components/Cleaning`} asChild style={{ alignItems: 'center', marginLeft: 20, backgroundColor: 'white', borderRadius: 5, padding: 10 }}>
               <TouchableOpacity>
             
              

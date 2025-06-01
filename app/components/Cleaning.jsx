@@ -1,9 +1,11 @@
-import { StyleSheet, Text, View ,FlatList,Image, Pressable} from 'react-native'
+import { StyleSheet, Text, View ,FlatList,Image, Pressable,TouchableOpacity} from 'react-native'
 import React from 'react'
 import clean from '../../Data/clean'
 import star from '../../assets/star.png'
-
+import { Link } from 'expo-router'
+import providerprofile from './providerprofile'
 const Cleaning = () => {
+
   return (
     <View>
        <FlatList
@@ -12,10 +14,9 @@ const Cleaning = () => {
           vertical
           showsHorizontalScrollIndicator={false}
           renderItem={({ item }) => (
-
-              <View style={{ marginTop:5, marginLeft: 5, backgroundColor: '', borderRadius: 5, padding: 10,height:150 }}>
-            
-             <View style={{flexDirection:'row',justifyContent:'space-around',alignItems:'center',backgroundColor:'white',borderRadius:10,padding:10,height:150}}>
+            <Link href={`./providerprofile`} asChild style={{ alignItems: 'center', marginLeft: 20, backgroundColor: 'white', borderRadius: 5, padding: 10 }}>
+          <TouchableOpacity style={{ marginTop:5, marginLeft: 5, backgroundColor: '', borderRadius: 5, padding: 10,height:150 }}>
+             <View style={{flexDirection:'row',justifyContent:'space-between',alignItems:'center',backgroundColor:'white',borderRadius:10,padding:10,height:150}}>
               <Image source={item.Icon} style={{height:30,width:30}} />
               <View>
               <Text style={styles.catname}>{item.name} </Text>
@@ -30,7 +31,9 @@ const Cleaning = () => {
               <Text style={{color:'white',fontSize:16}}>Book Now</Text></Pressable>
             </View>
             
-            </View>
+            
+            </TouchableOpacity>
+            </Link>
 
           )}
           keyExtractor={(item) => item.id}
@@ -41,5 +44,8 @@ const Cleaning = () => {
 }
 
 export default Cleaning
+
+
+
 
 const styles = StyleSheet.create({})

@@ -6,25 +6,20 @@ import 'react-native-reanimated';
 
 import { useColorScheme } from '@/hooks/useColorScheme';
 
-export default function RootLayout() {
+export default function RLayout() {
   const colorScheme = useColorScheme();
-  const [loaded] = useFonts({
-    SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
-  });
+ 
 
-  if (!loaded) {
-    // Async font loading only occurs in development.
-    return null;
-  }
+ 
 
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
       <>
        <StatusBar hidden={true} />
-      <Stack screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+      <Stack>
+       
         <Stack.Screen name="+not-found" />
-        <Stack.Screen name="(components)" options={{ headerShown: false }} />
+        <Stack.Screen name="(Cleaning)" options={{ headerShown: false }} />
         
       </Stack>
       <StatusBar style="auto" />
