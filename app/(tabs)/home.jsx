@@ -1,110 +1,117 @@
-import { StyleSheet, Text, View, Image, SafeAreaView, Pressable, FlatList,TouchableOpacity,TextInput } from 'react-native'
-import React from 'react'
-import categories from '../../Data/categories'
-import Cleaning from '../components/Cleaning'
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  SafeAreaView,
+  Pressable,
+  FlatList,
+  TouchableOpacity,
+  TextInput,
+  Dimensions
+} from 'react-native';
+import React, { useEffect } from 'react';
+import categories from '../../Data/categories';
 import { useNavigation } from '@react-navigation/native';
 import { Link } from 'expo-router';
+
 const Index = () => {
-    const navigation = useNavigation();
-   const [text, onChangeText] = React.useState('');
+  const navigation = useNavigation();
+  const [text, onChangeText] = React.useState('');
+  const [filteredCategories, setFilteredCategories] = React.useState(categories);
 
-
+  useEffect(() => {
+    if (text === '') {
+      setFilteredCategories(categories); // reset
+    } else {
+      const filtered = categories.filter((category) =>
+        category.name.toLowerCase().includes(text.toLowerCase())
+      );
+      setFilteredCategories(filtered);
+    }
+  }, [text]);
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={styles.container}>
-        <View style={styles.lgo} >
+        <View style={styles.lgo}>
           <Image source={require('../../assets/Logo.png')} style={styles.img} />
           <Text style={styles.txt}>LocalConnect</Text>
         </View>
         <Image source={require('../../assets/menu.png')} style={styles.menu} />
       </View>
+
       <View style={styles.searchdiv}>
-        <Image source={require('../../assets/icon.png')} style={styles.icon} /> 
+        <Image source={require('../../assets/icon.png')} style={styles.icon} />
         <Pressable style={styles.searchBox}>
-                  <TextInput
-                    style={styles.input}
-                    onChangeText={onChangeText}
-                    value={text}
-                    placeholder="Search for services"
-                    placeholderTextColor="#888"
-                  />
-                </Pressable>
-                <Text>{text}</Text>
+          <TextInput
+            style={styles.input}
+            onChangeText={onChangeText}
+            value={text}
+            placeholder="Search for services"
+            placeholderTextColor="#888"
+          />
+        </Pressable>
       </View>
+
       <View>
-        <Text style={styles.services}>
-          Most Booked Categories
-        </Text>
+        <Text style={styles.services}>Most Booked Categories</Text>
         <FlatList
           style={{ marginTop: 10, marginLeft: 10, marginRight: 10 }}
-          data={categories}
+          data={filteredCategories}
           horizontal
           showsHorizontalScrollIndicator={false}
           renderItem={({ item }) => (
-             <Link href={`/components/Cleaning`} asChild style={{ alignItems: 'center', marginLeft: 20, backgroundColor: 'white', borderRadius: 5, padding: 10 }}>
+            <Link
+              href={`/components/${item.name}`}
+              asChild
+              style={styles.horizontalItem}
+            >
               <TouchableOpacity>
-            
-             
-              <Image source={item.Icon} style={styles.caticon} />
-              <Text style={styles.catname}>{item.name}</Text>
-              
-            
-            </TouchableOpacity>
-</Link>
+                <Image source={item.Icon} style={styles.caticon} />
+                <Text style={styles.catname}>{item.name}</Text>
+              </TouchableOpacity>
+            </Link>
           )}
           keyExtractor={(item) => item.id}
         />
       </View>
-      
+
       <View style={{ flex: 1 }}>
-        <Text style={styles.services}>
-          Categories
-        </Text>
+        <Text style={styles.services}>Categories</Text>
         <FlatList
-          data={categories}
+          data={filteredCategories}
           numColumns={3}
           key={'3columns'}
-          showsVerticalScrollIndicator={true}
+          showsVerticalScrollIndicator={false}
           contentContainerStyle={{
-            paddingHorizontal: 10,
-            justifyContent: 'center',
-            flexGrow: 1, 
+            paddingHorizontal: 20,
+            paddingTop: 10,
           }}
           columnWrapperStyle={{
             justifyContent: 'space-between',
-            marginBottom: 15,
+            marginBottom: 20,
           }}
           renderItem={({ item }) => (
-            <View style={styles.gridItem}>
-              <Image source={item.Icon} style={styles.caticon1} />
-              <Text style={styles.catname1}>{item.name}</Text>
-            </View>
+            <Link href={`/components/${item.name}`} asChild>
+              <TouchableOpacity>
+                <View style={styles.gridItem}>
+                  <Image source={item.Icon} style={styles.caticon1} />
+                  <Text style={styles.catname1}>{item.name}</Text>
+                </View>
+              </TouchableOpacity>
+            </Link>
           )}
           keyExtractor={(item) => item.id}
         />
       </View>
     </SafeAreaView>
-  )
-}
+  );
+};
 
-export default Index
+export default Index;
 
 const styles = StyleSheet.create({
-  img: {
-    width: 80,
-    height: 80,
-    marginTop: 10,
-    marginLeft: 15,
-  },
-  txt: {
-    fontSize: 30,
-    color: 'white', 
-    alignSelf: 'center',
-    fontWeight: 'bold',
-    marginLeft: 5,
-    marginTop: 30,
-  },
   container: {
     marginTop: 0,
     flexDirection: 'row',
@@ -117,78 +124,90 @@ const styles = StyleSheet.create({
   lgo: {
     flexDirection: 'row',
     width: 192.58,
-    height: 71.42
+    height: 71.42,
+  },
+  img: {
+    width: 80,
+    height: 80,
+    marginTop: 10,
+    marginLeft: 15,
+  },
+  txt: {
+    fontSize: 30,
+    color: 'white',
+    alignSelf: 'center',
+    fontWeight: 'bold',
+    marginLeft: 5,
+    marginTop: 30,
   },
   menu: {
     width: 30,
     height: 30,
     marginTop: 30,
+    marginRight: 15,
   },
   searchdiv: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginLeft: 30,
-    marginRight: 30,
-    paddingLeft: 10,
-    paddingBottom: 5,
-    paddingTop: 5,
-    marginTop: 1,
+    marginHorizontal: 30,
+    paddingHorizontal: 10,
+    paddingVertical: 5,
     backgroundColor: 'white',
-    borderRadius: 3,
-  },
-  searchtxt: {
-    marginLeft: 20,
-    opacity: 0.5,
+    borderRadius: 5,
+    marginTop: -20,
   },
   icon: {
     opacity: 0.5,
     height: 24,
     width: 24,
   },
+  input: {
+    
+    marginLeft: 10,
+    fontSize: 16,
+    color: 'black',
+  },
   services: {
     fontSize: 18,
     marginLeft: 30,
     fontWeight: 'bold',
-    marginTop: 10,
+    marginTop: 20,
+  },
+  horizontalItem: {
+    alignItems: 'center',
+    marginLeft: 12,
+    backgroundColor: 'white',
+    borderRadius: 10,
+    padding: 10,
   },
   caticon: {
     width: 50,
     height: 50,
-    marginLeft: 0,
   },
   catname: {
     fontSize: 16,
     color: 'black',
-    //fontWeight: 'bold',
-  },
-  id: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginLeft: 30,
-    marginRight: 30,
-    paddingLeft: 10,
-    paddingBottom: 5,
-    paddingTop: 5,
-    marginTop: 1,
-    backgroundColor: 'white',
-    borderRadius: 3,
+    textAlign: 'center',
+    marginTop: 5,
   },
   gridItem: {
     backgroundColor: 'white',
-    borderRadius: 5,
-    paddingVertical: 10,
-    paddingHorizontal: 5,
-    width: '30%', 
+    borderRadius: 10,
+    paddingVertical: 15,
     alignItems: 'center',
+    justifyContent: 'center',
+    width: Dimensions.get('window').width / 4, // dynamic width for 3 items
+    marginHorizontal: 9,
+    elevation: 2,
   },
   caticon1: {
-    width: 50,
-    height: 50,
-    marginBottom: 5,
+    width: 40,
+    height: 40,
+    marginBottom: 10,
   },
   catname1: {
     fontSize: 14,
     color: 'black',
     textAlign: 'center',
   },
-})
+});

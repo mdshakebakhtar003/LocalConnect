@@ -1,10 +1,10 @@
 import { StyleSheet, Text, View ,FlatList,Image, Pressable,TouchableOpacity} from 'react-native'
 import React from 'react'
-import clean from '../../Data/clean'
+import clean from '../../Data/gardener'
 import star from '../../assets/star.png'
 import { Link } from 'expo-router'
 import providerprofile from './providerprofile'
-const Cleaning = () => {
+const Gardener = () => {
 
   return (
     <View>
@@ -14,8 +14,8 @@ const Cleaning = () => {
           vertical
           showsHorizontalScrollIndicator={false}
           renderItem={({ item }) => (
-            <Link href={`./providerprofile`} asChild style={{ alignItems: '', marginLeft: 1, backgroundColor: 'white', borderRadius: 0, padding: 5,width:'100%' }}>
-          <TouchableOpacity style={{ marginTop:5, marginLeft: 5, backgroundColor: '', borderRadius: 5, padding: 1,height:150,width:'100%' }}>
+            <Link href={`./providerprofile`} asChild style={{ alignItems: '', marginLeft: 1, backgroundColor: 'white', borderRadius: 0, padding: 5,width:'100%' ,flex:'wrap'}}>
+          <TouchableOpacity style={{ marginTop:5, marginLeft: 5, backgroundColor: '', borderRadius: 5, padding: 1,height:150,width:'100%',flex:'wrap' }}>
              <View style={{flexDirection:'row',justifyContent:'space-between',alignItems:'center',backgroundColor:'white',borderRadius:10,padding:10,height:150}}>
               <Image source={item.Icon} style={{height:30,width:30}} />
               <View>
@@ -43,7 +43,7 @@ const Cleaning = () => {
   )
 }
 
-export default Cleaning
+export default Gardener
 
 
 

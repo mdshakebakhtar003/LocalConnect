@@ -4,13 +4,14 @@ import clean from '../../Data/clean'
 import star from '../../assets/star.png'
 import { Link } from 'expo-router'
 import providerprofile from './providerprofile'
-const Cleaning = () => {
+import plumber from '../../Data/electrician'
+const Electrician = () => {
 
   return (
     <View>
        <FlatList
           style={{ marginTop: 0, marginLeft: 10, marginRight: 10 }}
-          data={clean}
+          data={plumber}
           vertical
           showsHorizontalScrollIndicator={false}
           renderItem={({ item }) => (
@@ -43,7 +44,7 @@ const Cleaning = () => {
   )
 }
 
-export default Cleaning
+export default Electrician
 
 
 

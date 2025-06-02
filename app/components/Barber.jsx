@@ -1,16 +1,16 @@
 import { StyleSheet, Text, View ,FlatList,Image, Pressable,TouchableOpacity} from 'react-native'
 import React from 'react'
-import clean from '../../Data/clean'
+import barber from '../../Data/barber'
 import star from '../../assets/star.png'
 import { Link } from 'expo-router'
 import providerprofile from './providerprofile'
-const Cleaning = () => {
+const Barber = () => {
 
   return (
     <View>
        <FlatList
           style={{ marginTop: 0, marginLeft: 10, marginRight: 10 }}
-          data={clean}
+          data={barber}
           vertical
           showsHorizontalScrollIndicator={false}
           renderItem={({ item }) => (
@@ -43,7 +43,7 @@ const Cleaning = () => {
   )
 }
 
-export default Cleaning
+export default Barber
 
 
 
